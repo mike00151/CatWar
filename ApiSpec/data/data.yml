@@ -1,0 +1,194 @@
+swagger: "2.0"
+info:
+  description: "This document is for backend service restful api"
+  version: "0.0.1"
+  title: "CatWar"
+host: "localhost"
+basePath: "/v1"
+tags:
+- name: "Meta Data"
+  description: "Meta data operation"
+- name: "User Data"
+  description: "User data operation"
+schemes:
+- "https"
+paths:
+  /data/update_data:
+    get:
+      tags:
+      - "Meta Data"
+      summary: "Get meta data."
+      description: "This api for getting meta data download link."
+      operationId: "getMetaData"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Getting rsponse successfully."
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/DataLink"
+      security:
+      - api_key: []
+  /data/user_data:
+    get:
+      tags:
+      - "User Data"
+      summary: "Get user data."
+      description: "This api for getting specific user data."
+      operationId: "getUserData"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "user_id"
+        in: "query"
+        description: "Identity of the user."
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Getting rsponse successfully."
+          schema:
+            $ref: "#/definitions/UserData"
+      security:
+      - api_key: []
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+definitions:
+  DataLink:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        description: "Link name of the download link."
+        example: "music"
+      link:
+        type: "string"
+        description: "Http url link for download the package."
+        example: "https://s3.aws.com/some-file-to-be-download"
+      version:
+        type: "string"
+        description: "Meta data file version."
+        example: "0.1.15"
+  SavePoint:
+    type: "object"
+    properties:
+      map_id:
+        type: "string"
+        description: "Identity of the map."
+        example: "map-001"
+      x:
+        type: "integer"
+        format: "int64"
+        description: "X axis of the map."
+        example: "130"
+      y:
+        type: "integer"
+        format: "int64"
+        description: "Y axis of the map."
+        example: "20"
+  CharacterData:
+    type: "object"
+    properties:
+      character_name:
+        type: "string"
+        description: "Name of the character."
+        example: "風間翔"
+      country:
+        type: "string"
+        description: "Name of the country."
+        example: "北境王國"
+      career:
+        type: "string"
+        description: "Career of the character."
+        example: "術士"
+      max_hp:
+        type: "integer"
+        format: "int64"
+        description: "Max health points of the character."
+        example: "87000"
+      current_hp:
+        type: "integer"
+        format: "int64"
+        description: "Current health points of the character."
+        example: "81000"
+      max_mp:
+        type: "integer"
+        format: "int64"
+        description: "Max magic points of the character."
+        example: "87000"
+      current_mp:
+        type: "integer"
+        format: "int64"
+        description: "Current magic points of the character."
+        example: "81000"
+      attack:
+        type: "integer"
+        format: "int64"
+        description: "Attack of the character."
+        example: "150"
+      defense:
+        type: "integer"
+        format: "int64"
+        description: "Defense of the character."
+        example: "80"
+      speed:
+        type: "integer"
+        format: "int64"
+        description: "Speed of the character."
+        example: "100"
+      level:
+        type: "integer"
+        format: "int64"
+        description: "Level of the character."
+        example: "87"
+      current_experience:
+        type: "integer"
+        format: "int64"
+        description: "Current experience of the character."
+        example: "23000000"
+      next_level_experience:
+        type: "integer"
+        format: "int64"
+        description: "Next level experience of the character."
+        example: "80000"
+      money:
+        type: "integer"
+        format: "int64"
+        description: "Money of the character."
+        example: "8888888"
+      save_point:
+        $ref: "#/definitions/SavePoint"
+        description: "Last save point of the character."
+      available_skill_point:
+        type: "integer"
+        format: "int64"
+        description: "Available skill points of the character."
+        example: "3"
+      skill_tree:
+        type: "array"
+        items:
+          type: "string"
+          format: "string"
+          description: "Skill identity."
+          example: "skill-001"
+      property_value:
+        type: "string"
+        format: "string"
+        description: "Property value of the character such as 火, 冰, 風, 光, 暗"
+        example: "冰"
+  UserData:
+    type: "object"
+    properties:
+      user_name:
+        type: "string"
+        description: "Name of the user."
+        example: "Tom"
+      characters:
+        type: "array"
+        description: "Characters of the user."
+        $ref: "#/definitions/CharacterData"
