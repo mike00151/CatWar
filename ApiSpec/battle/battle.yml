@@ -1,0 +1,148 @@
+swagger: "2.0"
+info:
+  description: "This document is for backend service restful api"
+  version: "0.0.1"
+  title: "CatWar"
+host: "localhost"
+basePath: "/v1"
+tags:
+- name: "Battle"
+  description: "Battle operation"
+schemes:
+- "https"
+paths:
+  /battle:
+    post:
+      tags:
+      - "Battle"
+      summary: "Enter a battle"
+      description: "This api for entering a battle"
+      operationId: "postBattle"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Character information to enter a battle."
+        required: true
+        schema:
+          $ref: "#/definitions/EnterBattleBody"
+      responses:
+        201:
+          description: "Getting rsponse successfully."
+          schema:
+            $ref: "#/definitions/Battle"
+      security:
+      - api_key: []
+    delete:
+      tags:
+      - "Battle"
+      summary: "Exit a battle"
+      description: "This api for exiting a battle"
+      operationId: "deleteBattle"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Battle result information to exit the battle."
+        required: true
+        schema:
+          $ref: "#/definitions/ExitBattleBody"
+      responses:
+        200:
+          description: "Getting rsponse successfully."
+          schema:
+            $ref: "#/definitions/BattleResult"
+      security:
+      - api_key: []
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+definitions:
+  Location:
+    type: "object"
+    properties:
+      map_id:
+        type: "string"
+        description: "Identity of the map."
+        example: "map-001"
+      x:
+        type: "integer"
+        format: "int64"
+        description: "X axis of the map."
+        example: "130"
+      y:
+        type: "integer"
+        format: "int64"
+        description: "Y axis of the map."
+        example: "20"
+  EnterBattleBody:
+    type: "object"
+    properties:
+      location:
+        $ref: "#/definitions/Location"
+      user_info:
+        type: "string"
+        description: "尚未定義"
+        example: "尚未定義"
+  ExitBattleBody:
+    type: "object"
+    properties:
+      battle_id:
+        type: "string"
+        description: "Identity of the battle."
+        example: "battle-4f037236-9422-42bc-a1ae-cfe36e8bcdee"
+      result:
+        type: "string"
+        enum:
+          - "succeed"
+          - "failed"
+          - "escaped"
+        description: "Battle result"
+        example: "succeed"
+      current_hp:
+        type: "integer"
+        format: "int64"
+        description: "Current health points of the character."
+        example: "81000"
+      current_mp:
+        type: "integer"
+        format: "int64"
+        description: "Current magic points of the character."
+        example: "81000"
+  Battle:
+    type: "object"
+    properties:
+      battle_id:
+        type: "string"
+        description: "Identity of the battle."
+        example: "battle-4f037236-9422-42bc-a1ae-cfe36e8bcdee"
+      monsters:
+        type: "array"
+        items:
+          type: "string"
+          format: "string"
+          description: "Monster id"
+          example: "monster-00001"
+      items:
+        type: "array"
+        items:
+          type: "string"
+          format: "string"
+          description: "Item id"
+          example: "item-00001"
+  BattleResult:
+    type: "object"
+    properties:
+      experience:
+        type: "integer"
+        format: "int64"
+        description: "戰役結束後所增加的經驗值."
+        example: "81000"
