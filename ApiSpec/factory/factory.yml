@@ -1,0 +1,229 @@
+swagger: "2.0"
+info:
+  description: "This document is for backend service restful api"
+  version: "0.0.1"
+  title: "CatWar"
+host: "localhost"
+basePath: "/v1"
+tags:
+- name: "Factory"
+  description: "Factory operation"
+schemes:
+- "https"
+paths:
+  /decomposed_item:
+    get:
+      tags:
+      - "Factory"
+      summary: "Decompose items"
+      description: "This api for decomposing items"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "bought_id"
+        in: "query"
+        description: "Item to be decomposed"
+        required: true
+        type: "string"
+        format: "string"
+      responses:
+        200:
+          description: "Getting rsponse successfully."
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/BoughtResultItem"
+      security:
+      - api_key: []
+  /enhanced_item:
+    get:
+      tags:
+      - "Factory"
+      summary: "Enhance items"
+      description: "This api for enhancing item"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "bought_id"
+        in: "query"
+        description: "Item to be enhanced"
+        required: true
+        type: "string"
+        format: "string"
+      responses:
+        200:
+          description: "Getting rsponse successfully."
+          schema:
+            $ref: "#/definitions/BoughtResultItem"
+      security:
+      - api_key: []
+  /crafted_item:
+    get:
+      tags:
+      - "Factory"
+      summary: "Craft items"
+      description: "This api for crafting item"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "item_id"
+        in: "query"
+        description: "Item to be crafted"
+        required: true
+        type: "string"
+        format: "string"
+      responses:
+        200:
+          description: "Getting rsponse successfully."
+          schema:
+            $ref: "#/definitions/BoughtResultItem"
+      security:
+      - api_key: []
+  /enchanted_item:
+    get:
+      tags:
+      - "Factory"
+      summary: "Enchante items"
+      description: "This api for enchanting item"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "bought_id"
+        in: "query"
+        description: "Item to be enchanted"
+        required: true
+        type: "string"
+        format: "string"
+      responses:
+        200:
+          description: "Getting rsponse successfully."
+          schema:
+            $ref: "#/definitions/BoughtResultItem"
+      security:
+      - api_key: []
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+definitions:
+  EnhanceBasicProperty:
+    type: "object"
+    properties:
+      enhancement_id:
+        type: "string"
+        format: "string"
+        description: "增益編號。每個編號代表不同增益，例如:編號001代表攻擊增加3%，編號005代表製作率增加5%"
+        example: "enhancement-id-cc36d2ff-74e9-47e2-9418-7a642adf85ec"
+      attack_enhance_ratio:
+        type: "number"
+        format: "float"
+        description: "攻擊增益百分比(EX : 基本攻擊100，攻擊增益百分比1.5，總攻擊=100*(1+1.5%)=101.5)"
+        example: "1.5"
+      defense_enhance_ratio:
+        type: "number"
+        format: "float"
+        description: "防禦增益百分比(EX : 基本防禦100，防禦增益百分比1.5，總防禦=100*(1+1.5%)=101.5)"
+        example: "1.5"
+      hp_enhance_ratio:
+        type: "number"
+        format: "float"
+        description: "最大血量增益百分比(EX : 基本血量100，最大血量增益百分比1.5，總血量=100*(1+1.5%)=101.5)"
+        example: "1.5"
+      mp_enhance_ratio:
+        type: "number"
+        format: "float"
+        description: "最大氣量增益百分比(EX : 基本氣量100，最大氣量增益百分比1.5，總氣量=100*(1+1.5%)=101.5)"
+        example: "1.5"
+      critical_ratio:
+        type: "number"
+        format: "float"
+        description: "爆擊率百分比"
+        example: "1.5"
+      critical_attack_ratio:
+        type: "number"
+        format: "float"
+        description: "爆擊傷害百分比(EX : 總攻擊100，爆擊傷害百分比150，輸出=100*(1+150%)=250)"
+        example: "150"
+      item_enhance_ratio:
+        type: "number"
+        format: "float"
+        description: "物品強化機率"
+        example: "60"
+      item_craft_ratio:
+        type: "number"
+        format: "float"
+        description: "物品製作機率"
+        example: "60"
+      speed_enhance_ratio:
+        type: "number"
+        format: "float"
+        description: "速度增益百分比(EX : 基本速度100，速度增益百分比1.5，總速度=100*(1+1.5%)=101.5)"
+        example: "1.5"
+  BasicProperty:
+    type: "object"
+    properties:
+      max_hp:
+        type: "integer"
+        format: "int64"
+        description: "Max health points of the character."
+        example: "87000"
+      current_hp:
+        type: "integer"
+        format: "int64"
+        description: "Current health points of the character."
+        example: "81000"
+      max_mp:
+        type: "integer"
+        format: "int64"
+        description: "Max magic points of the character."
+        example: "87000"
+      current_mp:
+        type: "integer"
+        format: "int64"
+        description: "Current magic points of the character."
+        example: "81000"
+      attack:
+        type: "integer"
+        format: "int64"
+        description: "Attack of the character."
+        example: "150"
+      defense:
+        type: "integer"
+        format: "int64"
+        description: "Defense of the character."
+        example: "80"
+      speed:
+        type: "integer"
+        format: "int64"
+        description: "Speed of the character."
+        example: "100"
+  BoughtResultItem:
+    type: "object"
+    properties:
+      item_id:
+        type: "string"
+        format: "string"
+        description: "道具編號。例如001代表鐵釘，002代表果實"
+        example: "item-id-cc36d2ff-74e9-47e2-9418-7a642adf85ec"
+      bought_id:
+        type: "string"
+        format: "string"
+        description: "道具編號。例如001代表鐵釘，002代表果實。道具被玩家購買後將會新增這項編號，用來識別玩家所擁有的道具編號"
+        example: "bought-id-cc36d2ff-74e9-47e2-9418-7a642adf85ec"
+      item_basic_property:
+        $ref: "#/definitions/BasicProperty"
+      item_enhance_basic_property:
+        type: "array"
+        items:
+          $ref: "#/definitions/EnhanceBasicProperty"
+      item_description:
+        type: "string"
+        format: "string"
+        description: "道具說明"
+        example: "用鐵製成的棒子。用來移動沉重的物品。偶爾危急時，也能當作其他用途使用。"
+      item_count:
+        type: "integer"
+        format: "int64"
+        description: "道具數量。相同的道具可疊加，疊加後數量將會增加。"
+        example: "80"
