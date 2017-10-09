@@ -1,0 +1,76 @@
+swagger: "2.0"
+info:
+  description: "This document is for backend service restful api"
+  version: "0.0.1"
+  title: "CatWar"
+host: "localhost"
+basePath: "/v1"
+tags:
+- name: "Backpack"
+  description: "Backpack operation"
+schemes:
+- "https"
+paths:
+  /backpack_usage:
+    get:
+      tags:
+      - "Backpack"
+      summary: "Using item in backpack"
+      description: "This api for using item in backpack."
+      produces:
+      - "application/json"
+      parameters:
+      - name: "bought_id"
+        in: "query"
+        description: "Item id to be used."
+        required: true
+        type: "string"
+        format: "string"
+      responses:
+        200:
+          description: "Getting rsponse successfully."
+          schema:
+            $ref: "#/definitions/BackpackUsageResult"
+      security:
+      - api_key: []
+    delete:
+      tags:
+      - "Backpack"
+      summary: "Destory item in backpack"
+      description: "This api for destoring item in backpack."
+      produces:
+      - "application/json"
+      parameters:
+      - name: "bought_id"
+        in: "query"
+        description: "Item id to be used."
+        required: true
+        type: "string"
+        format: "string"
+      responses:
+        200:
+          description: "Getting rsponse successfully."
+          schema:
+            $ref: "#/definitions/BackpackDestoryResult"
+      security:
+      - api_key: []
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+definitions:
+  BackpackUsageResult:
+    type: "object"
+    properties:
+      backpack_usage_result:
+        type: "boolean"
+        description: "道具使用結果成功或失敗"
+        example: "true"
+  BackpackDestoryResult:
+    type: "object"
+    properties:
+      backpack_destory_result:
+        type: "boolean"
+        description: "道具銷毀結果成功或失敗"
+        example: "true"
