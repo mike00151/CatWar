@@ -1,0 +1,41 @@
+swagger: "2.0"
+info:
+  description: "This document is for backend service restful api"
+  version: "0.0.1"
+  title: "CatWar"
+host: "localhost"
+basePath: "/v1"
+tags:
+- name: "Inn"
+  description: "Inn operation"
+schemes:
+- "https"
+paths:
+  /restore:
+    get:
+      tags:
+      - "Inn"
+      summary: "Restore"
+      description: "This api for restoring."
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Getting rsponse successfully."
+          schema:
+            $ref: "#/definitions/RestoreResult"
+      security:
+      - api_key: []
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+definitions:
+  RestoreResult:
+    type: "object"
+    properties:
+      restore_result:
+        type: "boolean"
+        description: "休息結果"
+        example: "true"
