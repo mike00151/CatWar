@@ -1,0 +1,890 @@
+swagger: "2.0"
+info:
+  description: "This document is for backend service restful api"
+  version: "0.0.1"
+  title: "CatWar"
+host: "localhost"
+basePath: "/v1"
+tags:
+- name: "Meta Data"
+  description: "Meta data operation"
+- name: "User Data"
+  description: "User data operation"
+- name: "Character"
+  description: "Character operation"
+- name: "Battle"
+  description: "Battle operation"
+- name: "Factory"
+  description: "Factory operation"
+- name: "Trading"
+  description: "Trading operation"
+- name: "Item store"
+  description: "Item store operation"
+- name: "Inn"
+  description: "Inn operation"
+- name: "Backpack"
+  description: "Backpack operation"
+schemes:
+- "https"
+paths:
+  /data/update_data:
+    get:
+      tags:
+      - "Meta Data"
+      summary: "Get meta data."
+      description: "This api for getting meta data download link."
+      operationId: "getMetaData"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Getting rsponse successfully."
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/DataLink"
+      security:
+      - api_key: []
+  /data/user_data:
+    get:
+      tags:
+      - "User Data"
+      summary: "Get user data."
+      description: "This api for getting specific user data."
+      operationId: "getUserData"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "user_id"
+        in: "query"
+        description: "Identity of the user."
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Getting rsponse successfully."
+          schema:
+            $ref: "#/definitions/UserData"
+      security:
+      - api_key: []
+  /character:
+    post:
+      tags:
+      - "Character"
+      summary: "Create a character"
+      description: "This api for creating a character by given parameters."
+      operationId: "postCharacter"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Character information to be created."
+        required: true
+        schema:
+          $ref: "#/definitions/CreateCharacter"
+      responses:
+        201:
+          description: "Getting rsponse successfully."
+          schema:
+            $ref: "#/definitions/Character"
+      security:
+      - api_key: []
+  /battle:
+    post:
+      tags:
+      - "Battle"
+      summary: "Enter a battle"
+      description: "This api for entering a battle"
+      operationId: "postBattle"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Character information to enter a battle."
+        required: true
+        schema:
+          $ref: "#/definitions/EnterBattleBody"
+      responses:
+        201:
+          description: "Getting rsponse successfully."
+          schema:
+            $ref: "#/definitions/Battle"
+      security:
+      - api_key: []
+    delete:
+      tags:
+      - "Battle"
+      summary: "Exit a battle"
+      description: "This api for exiting a battle"
+      operationId: "deleteBattle"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Battle result information to exit the battle."
+        required: true
+        schema:
+          $ref: "#/definitions/ExitBattleBody"
+      responses:
+        200:
+          description: "Getting rsponse successfully."
+          schema:
+            $ref: "#/definitions/BattleResult"
+      security:
+      - api_key: []
+  /decomposed_item:
+    get:
+      tags:
+      - "Factory"
+      summary: "Decompose items"
+      description: "This api for decomposing items"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "bought_id"
+        in: "query"
+        description: "Item to be decomposed"
+        required: true
+        type: "string"
+        format: "string"
+      responses:
+        200:
+          description: "Getting rsponse successfully."
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/BoughtResultItem"
+      security:
+      - api_key: []
+  /enhanced_item:
+    get:
+      tags:
+      - "Factory"
+      summary: "Enhance items"
+      description: "This api for enhancing item"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "bought_id"
+        in: "query"
+        description: "Item to be enhanced"
+        required: true
+        type: "string"
+        format: "string"
+      responses:
+        200:
+          description: "Getting rsponse successfully."
+          schema:
+            $ref: "#/definitions/BoughtResultItem"
+      security:
+      - api_key: []
+  /crafted_item:
+    get:
+      tags:
+      - "Factory"
+      summary: "Craft items"
+      description: "This api for crafting item"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "item_id"
+        in: "query"
+        description: "Item to be crafted"
+        required: true
+        type: "string"
+        format: "string"
+      responses:
+        200:
+          description: "Getting rsponse successfully."
+          schema:
+            $ref: "#/definitions/BoughtResultItem"
+      security:
+      - api_key: []
+  /enchanted_item:
+    get:
+      tags:
+      - "Factory"
+      summary: "Enchante items"
+      description: "This api for enchanting item"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "bought_id"
+        in: "query"
+        description: "Item to be enchanted"
+        required: true
+        type: "string"
+        format: "string"
+      responses:
+        200:
+          description: "Getting rsponse successfully."
+          schema:
+            $ref: "#/definitions/BoughtResultItem"
+      security:
+      - api_key: []
+  /trading_store:
+    get:
+      tags:
+      - "Trading"
+      summary: "List trading stores"
+      description: "This api for listing trading stores"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Getting rsponse successfully."
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/TradingStore"
+      security:
+      - api_key: []
+    post:
+      tags:
+      - "Trading"
+      summary: "Creating stores"
+      description: "This api for creating trading stores"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "CreateTradingStore"
+        description: "Store information."
+        required: true
+        schema:
+          $ref: "#/definitions/CreateTradingStore"
+      responses:
+        200:
+          description: "Getting rsponse successfully."
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/TradingStore"
+      security:
+      - api_key: []
+  /trading_store/{trading_store_id}/trading_item:
+    get:
+      tags:
+      - "Trading"
+      summary: "List trading items of the store"
+      description: "This api for listing trading items of the store"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "trading_store_id"
+        in: "path"
+        description: "Store id."
+        required: true
+        type: "string"
+        format: "string"
+      responses:
+        200:
+          description: "Getting rsponse successfully."
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/TradingItem"
+      security:
+      - api_key: []
+    post:
+      tags:
+      - "Trading"
+      summary: "Create trading item"
+      description: "This api for creating trading item"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "trading_store_id"
+        in: "path"
+        description: "Store id.(只能是自己的商場ID)"
+        required: true
+        type: "string"
+        format: "string"
+      - name: "bought_id"
+        in: "query"
+        description: "Item to be traded"
+        required: true
+        type: "string"
+        format: "string"
+      - name: "count"
+        in: "query"
+        description: "Item count."
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "Getting rsponse successfully."
+          schema:
+            $ref: "#/definitions/CreateTradingResult"
+      security:
+      - api_key: []
+  /trading_store/{trading_store_id}/trading_item/{trading_id}:
+    get:
+      tags:
+      - "Trading"
+      summary: "Get trading items from store."
+      description: "This api for getting trading items from store."
+      produces:
+      - "application/json"
+      parameters:
+      - name: "trading_store_id"
+        in: "path"
+        description: "Store id."
+        required: true
+        type: "string"
+        format: "string"
+      - name: "trading_id"
+        in: "path"
+        description: "Item to be traded"
+        required: true
+        type: "string"
+        format: "string"
+      responses:
+        200:
+          description: "Getting rsponse successfully."
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/BoughtResultItem"
+      security:
+      - api_key: []
+  /store:
+    get:
+      tags:
+      - "Item store"
+      summary: "List items"
+      description: "This api for listing items from item store."
+      operationId: "getStore"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "npc_id"
+        in: "query"
+        description: "NPC id"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Item"
+      security:
+      - api_key: []
+  /items:
+    get:
+      tags:
+      - "Item store"
+      summary: "Get items"
+      description: "This api for buying items from item store."
+      operationId: "getItems"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "npc_id"
+        in: "query"
+        description: "NPC id"
+        required: true
+        type: "string"
+      - name: "item_id"
+        in: "query"
+        description: "Item id"
+        required: true
+        type: "string"
+      - name: "item_count"
+        in: "query"
+        description: "Item count"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/BoughtResultItem"
+      security:
+      - api_key: []
+  /restore:
+    get:
+      tags:
+      - "Inn"
+      summary: "Restore"
+      description: "This api for restoring."
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Getting rsponse successfully."
+          schema:
+            $ref: "#/definitions/RestoreResult"
+      security:
+      - api_key: []
+  /backpack_usage:
+    get:
+      tags:
+      - "Backpack"
+      summary: "Using item in backpack"
+      description: "This api for using item in backpack."
+      produces:
+      - "application/json"
+      parameters:
+      - name: "bought_id"
+        in: "query"
+        description: "Item id to be used."
+        required: true
+        type: "string"
+        format: "string"
+      responses:
+        200:
+          description: "Getting rsponse successfully."
+          schema:
+            $ref: "#/definitions/BackpackUsageResult"
+      security:
+      - api_key: []
+    delete:
+      tags:
+      - "Backpack"
+      summary: "Destory item in backpack"
+      description: "This api for destoring item in backpack."
+      produces:
+      - "application/json"
+      parameters:
+      - name: "bought_id"
+        in: "query"
+        description: "Item id to be used."
+        required: true
+        type: "string"
+        format: "string"
+      responses:
+        200:
+          description: "Getting rsponse successfully."
+          schema:
+            $ref: "#/definitions/BackpackDestoryResult"
+      security:
+      - api_key: []
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+definitions:
+  BackpackUsageResult:
+    type: "object"
+    properties:
+      backpack_usage_result:
+        type: "boolean"
+        description: "道具使用結果成功或失敗"
+        example: "true"
+  BackpackDestoryResult:
+    type: "object"
+    properties:
+      backpack_destory_result:
+        type: "boolean"
+        description: "道具銷毀結果成功或失敗"
+        example: "true"
+  RestoreResult:
+    type: "object"
+    properties:
+      restore_result:
+        type: "boolean"
+        description: "休息結果"
+        example: "true"
+  Item:
+    type: "object"
+    properties:
+      item_id:
+        type: "string"
+        format: "string"
+        description: "道具編號。例如001代表鐵釘，002代表果實"
+        example: "item-id-cc36d2ff-74e9-47e2-9418-7a642adf85ec"
+      item_basic_property:
+        $ref: "#/definitions/BasicProperty"
+      item_enhance_basic_property:
+        type: "array"
+        items:
+          $ref: "#/definitions/EnhanceBasicProperty"
+      item_price:
+        type: "integer"
+        format: "int64"
+        description: "道具售價"
+        example: "8000"
+      item_description:
+        type: "string"
+        format: "string"
+        description: "道具說明"
+        example: "用鐵製成的棒子。用來移動沉重的物品。偶爾危急時，也能當作其他用途使用。"
+  Battle:
+    type: "object"
+    properties:
+      battle_id:
+        type: "string"
+        description: "Identity of the battle."
+        example: "battle-4f037236-9422-42bc-a1ae-cfe36e8bcdee"
+      monsters:
+        type: "array"
+        items:
+          type: "string"
+          format: "string"
+          description: "Monster id"
+          example: "monster-00001"
+      items:
+        type: "array"
+        items:
+          $ref: "#/definitions/Item"
+  BattleResult:
+    type: "object"
+    properties:
+      experience:
+        type: "integer"
+        format: "int64"
+        description: "戰役結束後所增加的經驗值."
+        example: "81000"
+  Location:
+    type: "object"
+    properties:
+      map_id:
+        type: "string"
+        description: "Identity of the map."
+        example: "map-001"
+      x:
+        type: "integer"
+        format: "int64"
+        description: "X axis of the map."
+        example: "130"
+      y:
+        type: "integer"
+        format: "int64"
+        description: "Y axis of the map."
+        example: "20"
+  EnterBattleBody:
+    type: "object"
+    properties:
+      location:
+        $ref: "#/definitions/Location"
+      user_info:
+        type: "string"
+        description: "尚未定義"
+        example: "尚未定義"
+  ExitBattleBody:
+    type: "object"
+    properties:
+      battle_id:
+        type: "string"
+        description: "Identity of the battle."
+        example: "battle-4f037236-9422-42bc-a1ae-cfe36e8bcdee"
+      result:
+        type: "string"
+        enum:
+          - "succeed"
+          - "failed"
+          - "escaped"
+        description: "Battle result"
+        example: "succeed"
+      current_hp:
+        type: "integer"
+        format: "int64"
+        description: "Current health points of the character."
+        example: "81000"
+      current_mp:
+        type: "integer"
+        format: "int64"
+        description: "Current magic points of the character."
+        example: "81000"
+  CreateCharacter:
+    type: "object"
+    properties:
+      character_name:
+        type: "string"
+        description: "Character name to be created."
+        example: "風間翔"
+      country:
+        type: "string"
+        description: "Country of the character."
+        example: "北境王國"
+      career:
+        type: "string"
+        description: "Career of the character."
+        example: "術士"
+  DataLink:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        description: "Link name of the download link."
+        example: "music"
+      link:
+        type: "string"
+        description: "Http url link for download the package."
+        example: "https://s3.aws.com/some-file-to-be-download"
+      version:
+        type: "string"
+        description: "Meta data file version."
+        example: "0.1.15"
+  SavePoint:
+    type: "object"
+    properties:
+      location:
+        $ref: "#/definitions/Location"
+  EnhanceBasicProperty:
+    type: "object"
+    properties:
+      enhancement_id:
+        type: "string"
+        format: "string"
+        description: "增益編號。每個編號代表不同增益，例如:編號001代表攻擊增加3%，編號005代表製作率增加5%"
+        example: "enhancement-id-cc36d2ff-74e9-47e2-9418-7a642adf85ec"
+      attack_enhance_ratio:
+        type: "number"
+        format: "float"
+        description: "攻擊增益百分比(EX : 基本攻擊100，攻擊增益百分比1.5，總攻擊=100*(1+1.5%)=101.5)"
+        example: "1.5"
+      defense_enhance_ratio:
+        type: "number"
+        format: "float"
+        description: "防禦增益百分比(EX : 基本防禦100，防禦增益百分比1.5，總防禦=100*(1+1.5%)=101.5)"
+        example: "1.5"
+      hp_enhance_ratio:
+        type: "number"
+        format: "float"
+        description: "最大血量增益百分比(EX : 基本血量100，最大血量增益百分比1.5，總血量=100*(1+1.5%)=101.5)"
+        example: "1.5"
+      mp_enhance_ratio:
+        type: "number"
+        format: "float"
+        description: "最大氣量增益百分比(EX : 基本氣量100，最大氣量增益百分比1.5，總氣量=100*(1+1.5%)=101.5)"
+        example: "1.5"
+      critical_ratio:
+        type: "number"
+        format: "float"
+        description: "爆擊率百分比"
+        example: "1.5"
+      critical_attack_ratio:
+        type: "number"
+        format: "float"
+        description: "爆擊傷害百分比(EX : 總攻擊100，爆擊傷害百分比150，輸出=100*(1+150%)=250)"
+        example: "150"
+      item_enhance_ratio:
+        type: "number"
+        format: "float"
+        description: "物品強化機率"
+        example: "60"
+      item_craft_ratio:
+        type: "number"
+        format: "float"
+        description: "物品製作機率"
+        example: "60"
+      speed_enhance_ratio:
+        type: "number"
+        format: "float"
+        description: "速度增益百分比(EX : 基本速度100，速度增益百分比1.5，總速度=100*(1+1.5%)=101.5)"
+        example: "1.5"
+  BasicProperty:
+    type: "object"
+    properties:
+      max_hp:
+        type: "integer"
+        format: "int64"
+        description: "Max health points of the character."
+        example: "87000"
+      current_hp:
+        type: "integer"
+        format: "int64"
+        description: "Current health points of the character."
+        example: "81000"
+      max_mp:
+        type: "integer"
+        format: "int64"
+        description: "Max magic points of the character."
+        example: "87000"
+      current_mp:
+        type: "integer"
+        format: "int64"
+        description: "Current magic points of the character."
+        example: "81000"
+      attack:
+        type: "integer"
+        format: "int64"
+        description: "Attack of the character."
+        example: "150"
+      defense:
+        type: "integer"
+        format: "int64"
+        description: "Defense of the character."
+        example: "80"
+      speed:
+        type: "integer"
+        format: "int64"
+        description: "Speed of the character."
+        example: "100"
+  Character:
+    type: "object"
+    properties:
+      character_name:
+        type: "string"
+        description: "Name of the character."
+        example: "風間翔"
+      country:
+        type: "string"
+        description: "Name of the country."
+        example: "北境王國"
+      career:
+        type: "string"
+        description: "Career of the character."
+        example: "術士"
+      level:
+        type: "integer"
+        format: "int64"
+        description: "Level of the character."
+        example: "87"
+      current_experience:
+        type: "integer"
+        format: "int64"
+        description: "Current experience of the character."
+        example: "23000000"
+      next_level_experience:
+        type: "integer"
+        format: "int64"
+        description: "Next level experience of the character."
+        example: "80000"
+      money:
+        type: "integer"
+        format: "int64"
+        description: "Money of the character."
+        example: "8888888"
+      save_point:
+        $ref: "#/definitions/SavePoint"
+      available_skill_point:
+        type: "integer"
+        format: "int64"
+        description: "Available skill points of the character."
+        example: "3"
+      skill_tree:
+        type: "array"
+        items:
+          type: "string"
+          format: "string"
+          description: "Skill identity."
+          example: "skill-001"
+      type:
+        type: "string"
+        format: "string"
+        description: "Property value of the character such as 火, 冰, 風, 光, 暗"
+        example: "冰"
+      basic_property:
+        $ref: "#/definitions/BasicProperty"
+  UserData:
+    type: "object"
+    properties:
+      user_name:
+        type: "string"
+        description: "Name of the user."
+        example: "Tom"
+      characters:
+        type: "array"
+        description: "Characters of the user."
+        items:
+          $ref: "#/definitions/Character"
+  TradingItem:
+    type: "object"
+    properties:
+      trading_id:
+        type: "string"
+        format: "string"
+        description: "道具編號。例如001代表鐵釘，002代表果實"
+        example: "item-id-cc36d2ff-74e9-47e2-9418-7a642adf85ec"
+      item_basic_property:
+        $ref: "#/definitions/BasicProperty"
+      item_enhance_basic_property:
+        type: "array"
+        items:
+          $ref: "#/definitions/EnhanceBasicProperty"
+      item_price:
+        type: "integer"
+        format: "int64"
+        description: "道具售價"
+        example: "8000"
+      item_description:
+        type: "string"
+        format: "string"
+        description: "道具說明"
+        example: "用鐵製成的棒子。用來移動沉重的物品。偶爾危急時，也能當作其他用途使用。"
+  TradingStore:
+    type: "object"
+    properties:
+      trading_store_id:
+        type: "string"
+        format: "string"
+        description: "商場編號"
+        example: "trading-store-id-cc36d2ff-74e9-47e2-9418-7a642adf85ec"
+      trading_store_name:
+        type: "string"
+        format: "string"
+        description: "商場名稱"
+        example: "Mike的材料商場"
+      trading_store_description:
+        type: "string"
+        format: "string"
+        description: "商場描述"
+        example: "販售各式基礎材料與+8神武"
+  CreateTradingStore:
+    type: "object"
+    properties:
+      trading_store_name:
+        type: "string"
+        format: "string"
+        description: "商場名稱"
+        example: "Mike的材料商場"
+      trading_store_description:
+        type: "string"
+        format: "string"
+        description: "商場描述"
+        example: "販售各式基礎材料與+8神武"
+  CreateTradingResult:
+    type: "object"
+    properties:
+      trading_result:
+        type: "boolean"
+        description: "物品是否成功登錄至拍賣場"
+        example: "true"
+  BoughtResultItem:
+    type: "object"
+    properties:
+      item_id:
+        type: "string"
+        format: "string"
+        description: "道具編號。例如001代表鐵釘，002代表果實"
+        example: "item-id-cc36d2ff-74e9-47e2-9418-7a642adf85ec"
+      bought_id:
+        type: "string"
+        format: "string"
+        description: "道具編號。例如001代表鐵釘，002代表果實。道具被玩家購買後將會新增這項編號，用來識別玩家所擁有的道具編號"
+        example: "bought-id-cc36d2ff-74e9-47e2-9418-7a642adf85ec"
+      item_basic_property:
+        $ref: "#/definitions/BasicProperty"
+      item_enhance_basic_property:
+        type: "array"
+        items:
+          $ref: "#/definitions/EnhanceBasicProperty"
+      item_description:
+        type: "string"
+        format: "string"
+        description: "道具說明"
+        example: "用鐵製成的棒子。用來移動沉重的物品。偶爾危急時，也能當作其他用途使用。"
+      item_count:
+        type: "integer"
+        format: "int64"
+        description: "道具數量。相同的道具可疊加，疊加後數量將會增加。"
+        example: "80"
